@@ -1,4 +1,4 @@
-module github.com/mroth/sseserver
+module github.com/christophersw/sseserver
 
 go 1.11
 
