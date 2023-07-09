@@ -24,6 +24,7 @@ type Server struct {
 type ServerOptions struct {
 	DisableAdminEndpoints bool // disables the "/admin" status endpoints
 	// DisallowRootSubscribe bool // TODO: possibly consider this option?
+	PathPrefix string // This allows you to set a path prefix for the standard routes
 }
 
 // NewServer creates a new Server and returns a reference to it.
@@ -47,11 +48,11 @@ func NewServer() *Server {
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	mux := http.NewServeMux()
 	mux.Handle(
-		"/subscribe/",
+		s.Options.PathPrefix+"/subscribe/",
 		http.StripPrefix("/subscribe", connectionHandler(s.hub)),
 	)
 	mux.Handle(
-		"/admin/",
+		s.Options.PathPrefix+"/admin/",
 		adminHandler(s),
 	)
 	mux.ServeHTTP(w, r)
