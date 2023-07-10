@@ -118,8 +118,8 @@ func adminHandler(s *Server) http.Handler {
 		}
 
 		mux := http.NewServeMux()
-		mux.HandleFunc("/admin/", adminStatusHTMLHandler)
-		mux.HandleFunc("/admin/status.json", func(w http.ResponseWriter, r *http.Request) {
+		mux.HandleFunc(s.Options.PathPrefix+"/admin/", adminStatusHTMLHandler)
+		mux.HandleFunc(s.Options.PathPrefix+"/admin/status.json", func(w http.ResponseWriter, r *http.Request) {
 			adminStatusDataHandler(w, r, s)
 		})
 		mux.ServeHTTP(w, r)
